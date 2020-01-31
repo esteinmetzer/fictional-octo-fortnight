@@ -22,10 +22,10 @@
   <div class="container">
     <!-- Timeblocks go here -->
     <div class="input-group mb-3">
-      <div class="hour col-md-auto">9am</div>
-      <textarea class="col-10" name="" id="" cols="" rows="4"></textarea>
+      <div class="hour col-md-auto" id="hour">9am</div>
+      <textarea class="col-10" name="" id="content" cols="" rows="4"></textarea>
       <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Button</button>
+        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
       </div>
     </div>
 
@@ -34,9 +34,20 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script>
-    var todayDate = moment().format("MMMM Do YYYY")
-    console.log(todayDate);
-    $('#currentDay').text(todayDate)
+
+    $(document).ready(function () {
+      var todayDate = moment().format("MMMM Do YYYY")
+      console.log(todayDate);
+      $('#currentDay').text(todayDate)
+
+      $(document).on("click", ".saveBtn", function () {
+        var eventContent = $("#content").val()
+        localStorage.setItem("events", eventContent)
+      })
+      $("#content").text(localStorage.getItem("events"))
+      function createElements() {
+
+      }
 
   </script>
 </body>
