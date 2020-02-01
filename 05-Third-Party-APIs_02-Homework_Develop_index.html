@@ -21,70 +21,13 @@
   </header>
   <div class="container">
     <!-- Timeblocks go here -->
-    <div class="input-group mb-3">
+    <!-- <div class="input-group mb-3">
       <div class="hour col-1" id="hour">9am</div>
       <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
       <div class="input-group-append">
         <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
       </div>
-    </div>
-    <div class="input-group mb-3">
-      <div class="hour col-1" id="hour">10am</div>
-      <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
-      </div>
-    </div>
-    <div class="input-group mb-3">
-      <div class="hour col-1" id="hour">11am</div>
-      <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
-      </div>
-    </div>
-    <div class="input-group mb-3">
-      <div class="hour col-1" id="hour">12pm</div>
-      <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
-      </div>
-    </div>
-    <div class="input-group mb-3">
-      <div class="hour col-1" id="hour">1pm</div>
-      <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
-      </div>
-    </div>
-    <div class="input-group mb-3">
-      <div class="hour col-1" id="hour">2pm</div>
-      <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
-      </div>
-    </div>
-    <div class="input-group mb-3">
-      <div class="hour col-1" id="hour">3pm</div>
-      <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
-      </div>
-    </div>
-    <div class="input-group mb-3">
-      <div class="hour col-1" id="hour">4pm</div>
-      <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
-      </div>
-    </div>
-    <div class="input-group mb-3">
-      <div class="hour col-1" id="hour">5pm</div>
-      <textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>
-      <div class="input-group-append">
-        <button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>
-      </div>
-    </div>
-
+    </div> -->
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -96,17 +39,42 @@
       console.log(todayDate);
       $('#currentDay').text(todayDate)
 
-      $(document).on("click", ".saveBtn", function () {
+      let eventArray = ['9am', '10am', "11am", '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']
+      for (let i = 0; i < eventArray.length; i++) {
+        const container = $('.container')
+        container.append(`<div class="row${i} input-group mb-3"></div>`)
+        const row = $(`.row${i}`)
+        row.append(`<div class="hour col-1" id="hour">${eventArray[i]}</div>`)
+        row.append(`<textarea class="col-10" name="titles[]" id="content${i}" cols="" rows="4"></textarea>`)
+        const data = $(`#content${i}`)
+        console.log(data);
+        data.val(localStorage.getItem(eventArray[i]))
+        console.log(localStorage.getItem(eventArray[i]))
+        row.append(`<div class="buttonParent${i} input-group-append"></div>`)
+        const buttonParent = $(`.buttonParent${i}`)
+        buttonParent.append('<button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>')
+      }
+
+
+      $(document).on("click", ".saveBtn", function (e) {
         // var eventContent = $(".col-10").val()
         // var eventArray = [eventContent]
         // localStorage.setItem("events", eventArray)
         // for (var i = 0; i < eventArray.length; i++) {
         //   $("#content").text(localStorage.getItem(eventArray[i]))
         // }
-        var eventContent = $("textarea[name^titles]").val()
-        console.log(eventContent);
+        console.log($(this).parent().siblings('#content').val())
+        const content = $(this).parent().siblings('#content').val()
+        const key = $(this).parent().siblings('#hour').text()
+        localStorage.setItem(key, content)
 
-        let eventArray = []
+
+
+        // const row = '<div class="input-group mb-3">hi</div>'
+        // const hour = 
+        // const textarea = '<textarea class="col-10" name="titles[]" id="content" cols="" rows="4"></textarea>'
+        // container.append(row).append(hour).append(textarea)
+
 
       })
       // if (adad) {
