@@ -38,17 +38,41 @@
       var todayDate = moment().format("MMMM Do YYYY")
       console.log(todayDate);
       $('#currentDay').text(todayDate)
-      var currentTime = moment()
+      let currentTime = moment().format("HH")
       console.log(currentTime);
 
-
-      let eventArray = ['9am', '10am', "11am", '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']
+      let eventArray = ['9 am', '10 am', "11 am", '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm']
+      const militaryObject = {
+        '9': '9',
+        '10': '10',
+        '11': '11',
+        '12': '12',
+        '1': '13',
+        '2': '14',
+        '3': '15',
+        '4': '16',
+        '5': '17'
+      };
       for (let i = 0; i < eventArray.length; i++) {
+        currentTime = 10;
+        console.log(moment(eventArray[i]).format("hh"));
+        const hour = parseInt(eventArray[i].split(" ")[0])
         const container = $('.container')
         container.append(`<div class="row${i} input-group mb-3"></div>`)
         const row = $(`.row${i}`)
+        let militaryhour = militaryObject[hour];
+        let time = null;
+        if (militaryhour < currentTime) {
+          time = "past"
+        }
+        else if (militaryhour == currentTime) {
+          time = "present"
+        }
+        else {
+          time = "future"
+        }
         row.append(`<div class="hour col-1" id="hour">${eventArray[i]}</div>`)
-        row.append(`<textarea class="col-10" name="titles[]" id="content${i}" cols="" rows="4"></textarea>`)
+        row.append(`<textarea class="col-10 ${time}" data-time=${eventArray[i]} name="titles[]" id="content${i}" cols="" rows="4"></textarea>`)
         const data = $(`#content${i}`)
         console.log(data);
         data.val(localStorage.getItem(eventArray[i]))
@@ -56,6 +80,9 @@
         row.append(`<div class="buttonParent${i} input-group-append"></div>`)
         const buttonParent = $(`.buttonParent${i}`)
         buttonParent.append('<button class="btn btn-outline-primary saveBtn col-md-auto" type="button" id="button-addon2">Save</button>')
+        console.log(`hour: ${militaryhour} currentTime: ${currentTime}`)
+
+
       }
 
 
@@ -66,10 +93,12 @@
         // for (var i = 0; i < eventArray.length; i++) {
         //   $("#content").text(localStorage.getItem(eventArray[i]))
         // }
-        console.log($(this).parent().siblings('#content').val())
-        const content = $(this).parent().siblings('#content').val()
+        console.log($(this).parent().siblings(`.col-10`).val())
+        const content = $(this).parent().siblings('.col-10').val()
         const key = $(this).parent().siblings('#hour').text()
         localStorage.setItem(key, content)
+        console.log(key);
+
 
 
 
