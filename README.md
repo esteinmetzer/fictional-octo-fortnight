@@ -4,6 +4,8 @@
 * CSS
 * Javascript
 
+[Click Here](https://esteinmetzer.github.io/fictional-octo-fortnight/) to access the planner
+
 ## Overview
 Create a work day planner for staying on track throughout the day to understand how best to keep on task throughout the day
 
